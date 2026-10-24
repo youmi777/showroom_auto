@@ -1,0 +1,33 @@
+<div class="container">
+  <label>Brand</label>
+  <input type="text" #brand placeholder="Mercedes, BMW, Audi..."
+         (input)="selectAutos(brand.value)">
+  <fa-icon [icon]="faMagnifyingGlass" />
+</div>
+
+<div class="carscontainer">
+  @for (auto of selectedautos; track auto.id) {
+    <div class="auto-card">
+      <div class="img-wrap">
+        <img [src]="`images/${auto.photo}`" [alt]="auto.model">
+        <span class="badge" [class.low]="auto.availability <= 3">
+          {{ auto.availability }} en stock
+        </span>
+      </div>
+      <div class="details">
+        <span class="brand">{{ auto.brand }}</span>
+        <h3>{{ auto.model }}</h3>
+        <div class="specs">
+          <span>⚡ {{ auto.power }}</span>
+          <span class="price">{{ auto.price }} TND</span>
+        </div>
+      </div>
+      <button class="more-btn" (click)="selectcar(auto)">See More →</button>
+      <button class="compare-btn" [class.active]="isCompared(auto)" (click)="compare(auto)">
+        {{ isCompared(auto) ? '✓ Retirer' : '+ Comparer' }}
+      </button>
+    </div>
+  } @empty {
+    <p class="empty">Aucune voiture trouvée pour cette marque.</p>
+  }
+</div>
